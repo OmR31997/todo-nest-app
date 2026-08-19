@@ -1,0 +1,59 @@
+name: AWS DEPLOY TO EC2
+
+permissions:
+    contents: read
+    pull-requests: write
+
+env: 
+  AWS_REGION: ap-south-1
+  PORT: 3000
+  APP_NAME: todo-nest-app
+  APP_DIR: ~/test-nest-app
+  NODE_VERSION: '22.10.x'
+
+on:
+    push:
+        branches:[main]
+
+jobs:
+  ci:
+    name: CI (Continuous Integration)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Use Node.js ${{ env.NODE_VERSION }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+          cache-dependency-path: '**/package-lock.json'
+
+      - name: Install Dependencies
+        run: npm ci --legacy-peer-deps
+      
+      - name: Run Tests
+        run: npm test
+      
+      - name: Build Application
+        run: npm run build
+
+  cd: 
+    name: CD (Continuous Deployment)
+    runs-on: ubuntu-latest
+    needs: ci
+
+    steps:
+      - name: SSH Authentication
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            cd ${{ env.APP_DIR }}
+            
+    
+    

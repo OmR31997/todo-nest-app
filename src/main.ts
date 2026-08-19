@@ -25,7 +25,7 @@ async function bootstrap() {
   );
 
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Todo & Health API')
+    .setTitle(':: Todo & Health API ::')
     .setDescription('Swagger API documentation for Todo CRUD and Health check endpoints')
     .setVersion('1.0')
     .addBearerAuth(
