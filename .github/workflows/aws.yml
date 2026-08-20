@@ -15,7 +15,7 @@ env:
   INSTANCE_ID: ${{ secrets.INSTANCE_ID }}
   SNS_TOPIC_ARN: ${{ secrets.SNS_TOPIC_ARN }}
   NODE_VERSION: 24
-  APP_NAME: todo-nest-app
+  APP_NAME: to-nest-app
   PORT: 3000
 
 
