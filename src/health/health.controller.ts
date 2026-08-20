@@ -13,7 +13,7 @@ export class HealthController {
   })
   check(): HealthResponseDto {
     return {
-      status: 'Good',
+      status: 'Running Good',
       timestamp: new Date().toISOString(),
       uptime: process.uptime(),
     };
