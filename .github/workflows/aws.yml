@@ -57,7 +57,8 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ env.EC2_HOST }} >> ~/.ssh/known_hosts
-
+          ssh -T git@github.com
+          
       - name: Deploy to EC2
         run: |
           ssh ${{ env.EC2_USER }}@${{ env.EC2_HOST }} << 'EOF'
