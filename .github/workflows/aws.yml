@@ -57,7 +57,6 @@ jobs:
           eval "$(ssh-agent -s)"
           ssh-add ~/.ssh/id_ed25519
           ssh-keyscan -H ${{ env.EC2_HOST }} >> ~/.ssh/known_hosts
-          ssh -T git@github.com
           
       - name: Deploy to EC2
         run: |
@@ -69,10 +68,3 @@ jobs:
             export SNS_TOPIC_ARN="${{ env.SNS_TOPIC_ARN }}"
             bash "$APP_DIR/scripts/deploy.sh"
           EOF
-
-        
-
-
-            
-    
-    
